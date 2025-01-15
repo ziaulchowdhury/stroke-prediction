@@ -115,7 +115,6 @@ class DataExplorer:
 
 if __name__ == "__main__":
     
-    # Load the dataset
     file_path = "../data/healthcare-dataset-stroke-data.csv"
     data_loader = DataLoader(file_path)
     data_explorer = DataExplorer(data_loader)
