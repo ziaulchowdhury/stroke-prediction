@@ -3,7 +3,7 @@
 """
 Created on Tue Jan 14 01:24:18 2025
 
-@author: zic
+@author: Ziaul Chowdhury
 """
 
 from data_loader import DataLoader
