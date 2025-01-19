@@ -1,0 +1,22 @@
+experiment:
+  name: "stroke_classification_experiment"
+  tracking_uri: "sqlite:///metadata/mlflow/mlruns.db"
+  artifact_location: "./metadata/mlflow/mlartifacts"
+
+model_registry:
+  model_name: "stroke_classifier"
+
+SPLIT_RATIOS: [0.80, 0.10, 0.10]
+
+INGEST_CONFIG:
+  using: csv
+  location: "./data/healthcare-dataset-stroke-data.csv"
+  loader_method: load_file_as_dataframe
+
+INGEST_SCORING_CONFIG:
+  using: parquet
+  location: "./data/winequality.csv"
+
+PREDICT_OUTPUT_CONFIG:
+  using: parquet
+  location: "./data/is_red_wine_prediction.parquet"

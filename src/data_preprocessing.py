@@ -7,9 +7,6 @@ Created on Tue Jan 14 01:30:02 2025
 """
 
 from data_loader import DataLoader
-import pandas as pd
-import numpy as np
-from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer

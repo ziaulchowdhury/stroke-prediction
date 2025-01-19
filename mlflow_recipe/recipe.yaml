@@ -1,0 +1,28 @@
+recipe: "classification/v1"
+# target_col: "stroke"
+target_col: "is_red"
+positive_class: 1
+primary_metric: "f1_score"
+steps:
+  ingest: {{INGEST_CONFIG}}
+  split:
+    split_ratios: {{SPLIT_RATIOS|default([0.75, 0.125, 0.125])}}
+  transform:
+    using: custom
+    transformer_method: transformer_fn
+  train:
+    using: custom
+    estimator_method: estimator_fn
+  evaluate:
+    validation_criteria:
+      - metric: f1_score
+        threshold: 0.6
+      - metric: precision_score
+        threshold: 0.6
+      - metric: recall_score
+        threshold: 0.6
+  register:
+    allow_non_validated_model: false
+  ingest_scoring: {{INGEST_SCORING_CONFIG}}
+  predict:
+    output: {{PREDICT_OUTPUT_CONFIG}}

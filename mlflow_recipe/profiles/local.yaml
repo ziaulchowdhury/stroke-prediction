@@ -1,0 +1,23 @@
+experiment:
+  name: "sklearn_classification_experiment_1"
+  tracking_uri: "sqlite:///metadata/mlflow/mlruns.db"
+  artifact_location: "./metadata/mlflow/mlartifacts"
+
+model_registry:
+  model_name: "red_wine_classifier"
+
+SPLIT_RATIOS: [0.80, 0.10, 0.10]
+
+INGEST_CONFIG:
+  using: csv
+  location: ["./data/winequality-white.csv", "./data/winequality-red.csv"]
+  #location: "./data/healthcare-dataset-stroke-data.csv"
+  loader_method: load_file_as_dataframe
+
+INGEST_SCORING_CONFIG:
+  using: parquet
+  location: "./data/winequality.csv"
+
+PREDICT_OUTPUT_CONFIG:
+  using: parquet
+  location: "./data/is_red_wine_prediction.parquet"

@@ -1,0 +1,49 @@
+recipe: "classification/v1"
+target_col: "stroke"
+positive_class: 1
+primary_metric: "f1_score"
+steps:
+  ingest: {{INGEST_CONFIG}}
+  split:
+    split_ratios: {{SPLIT_RATIOS|default([0.75, 0.125, 0.125])}}
+    using: custom
+    split_method: custom_split
+    #post_split_filter_method: create_dataset_filter
+  transform:
+    using: custom
+    transformer_method: transformer_fn
+  train:
+    using: "custom"
+    estimator_method: estimator_fn
+    estimator_params:
+      max_depth: 3
+      n_estimators: 150
+    tuning:
+      enabled: False
+      algorithm: "hyperopt.rand.suggest"
+      max_trials: 5
+      early_stop_fn: my_early_stop_fn
+      parallelism: 1
+      sample_fraction: 0.5
+      parameters:
+        alpha:
+          distribution: "uniform"
+          low: 0.0
+          high: 0.01
+        penalty:
+          values: [ "l1", "l2", "elasticnet" ]
+  evaluate:
+    validation_criteria:
+      - metric: precision_score
+        threshold: 0.6
+      #- metric: f1_score
+      #  threshold: 0.6
+      #- metric: precision_score
+      #  threshold: 0.4
+      #- metric: recall_score
+      #  threshold: 0.4
+  register:
+    allow_non_validated_model: false
+  ingest_scoring: {{INGEST_SCORING_CONFIG}}
+  predict:
+    output: {{PREDICT_OUTPUT_CONFIG}}
